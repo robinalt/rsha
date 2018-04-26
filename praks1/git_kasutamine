@@ -15,3 +15,23 @@ c) sisene antud kausta
 cd skriptimine
 
 d) tekita lokaalne reositoorium git süsteemi jaoks antud kaustas git init
+
+remote seadistamine:
+
+a) git remote add nimi aadress
+git remote add skriptimine https://github.com/robinalt/rsha.git
+
+b) git remote kontroll
+git remote -v
+
+põhikasutamine:
+
+a) pane fail jälgimisele:
+git add failinimi
+
+b) lisa kirjelduse muudatuse kohta
+git commit -m "proov2"
+
+c) lisa kaugrepositooriumi
+git push -uf skriptimine master
+
