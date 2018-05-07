@@ -1,0 +1,37 @@
++#!/bin/bash
++#
++# kasutajate lisamine, parooli genereerimine.
++
++if [ $# -ne 1 ]; then
++	echo "Kasutusjuhend: $0 kasutajate failinimi"
++else
++	failinimi=$1
++	if [ -f $failinimi -a -r $failinimi ]; then
++		echo "fail on korras"
++
++		for kasutajanimed in $(cat $failinimi)
++			do
++				paroolid=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1)
++				echo "$kasutajanimed"":""$paroolid" >> kasutajad.paroolid
++		done
++		for rida in $(cat kasutajad.paroolid)
++			do
++				kasutaja=$(echo $rida | cut -f1 -d:)
++				#sh lisa_kasutaja
++				useradd $kasutaja -m -s /bin/bash
++				if [ $? -eq 0 ]; then
++        				echo "Loodud kasutaja $kasutaja"
++        				cat /etc/passwd | grep $kasutaja
++        				ls -la /home/$kasutaja
++				else
++        				echo "Esines probleem $kasutaja lisamisega."
++        				echo "Veakood: $?"
++				fi
++				#sh lisa_kasutaja lõpp
++				chpasswd < kasutajad.paroolid
++			done
++
++	else
++		echo "probleem failiga"
++	fi
++fi
