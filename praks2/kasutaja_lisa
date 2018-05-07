@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+#Kasutajate lisamine
+#
+#
+
+if [ $# -ne 1 ]; then
+	echo "Kasutusjuhend: $0 Kasutajanimi"
+else
+
+kasutaja=$1
+
+useradd $kasutaja -m -s /bin/bash
+
+if [ $? -eq 0 ]; then
+	echo "Loodud kasutaja $kasutaja"
+	cat /etc/passwd | grep $kasutaja
+	ls -la /home/$kasutaja
+else
+	echo "Esines probleem $kasutaja lisamisega."
+	echo "Veakood: $?"
+fi
+fi
